@@ -596,3 +596,13 @@ func (gen *defaultIDGenerator) NewTraceID() [16]byte {
 	gen.Unlock()
 	return tid
 }
+
+// ParentSpanID returns the parent span ID of the span.
+// https://github.com/census-instrumentation/opencensus-go/issues/1007
+// https://github.com/census-instrumentation/opencensus-go/pull/1008
+func (s *Span) ParentSpanID() SpanID {
+	if s.data == nil {
+		return SpanID{}
+	}
+	return s.data.ParentSpanID
+}
